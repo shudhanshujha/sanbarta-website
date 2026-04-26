@@ -416,24 +416,28 @@ const App: React.FC = () => {
                   variants={fadeUp}
                   className="uiverse-card"
                 >
+                  {/* Icon — always at top, in flow */}
                   <div className="card-icon-wrap">
                     {s.icon}
                   </div>
 
-                  <div className="mt-auto">
+                  {/* Title + desc */}
+                  <div>
                     <p className="heading">{s.title}</p>
                     <p>{s.desc}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-4">
-                      {s.highlights.map(h => (
-                        <span
-                          key={h}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/8 rounded-full text-[10px] font-semibold text-[#d4af37] uppercase tracking-wider"
-                        >
-                          <CheckCircle2 size={9} />
-                          {h}
-                        </span>
-                      ))}
-                    </div>
+                  </div>
+
+                  {/* Tags — pushed to bottom with mt-auto */}
+                  <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
+                    {s.highlights.map(h => (
+                      <span
+                        key={h}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/8 rounded-full text-[10px] font-semibold text-[#d4af37] uppercase tracking-wider"
+                      >
+                        <CheckCircle2 size={9} />
+                        {h}
+                      </span>
+                    ))}
                   </div>
                 </motion.div>
               ))}
