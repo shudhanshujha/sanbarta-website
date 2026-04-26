@@ -26,34 +26,34 @@ const fadeIn = {
 
 /* ─── Data ────────────────────────────────────────── */
 const services = [
-  { 
-    title: 'Business Accounting', 
-    icon: <Briefcase className="w-7 h-7" />,
-    highlights: ['Tally Prime', 'Payroll Management', 'GST Returns'],
-    color: 'from-blue-600 to-indigo-700',
-    desc: 'Seamless daily administration and bookkeeping powered by Tally Prime.' 
-  },
-  { 
-    title: 'Financial Strategy', 
-    icon: <TrendingUp className="w-7 h-7" />,
-    highlights: ['XBRL Conversion', 'ROC Compliance', 'Bank Requirements'],
-    color: 'from-orange-500 to-red-600',
-    desc: 'Strategic financial reporting that satisfies the most rigorous regulatory standards.' 
-  },
-  { 
-    title: 'Management Consulting', 
+  {
+    title: 'Tax Advisory',
     icon: <Scale className="w-7 h-7" />,
-    highlights: ['CMA Data', 'Project Reports', 'Cost Optimization'],
-    color: 'from-emerald-500 to-teal-600',
-    desc: 'Optimizing resources and securing finance with data-driven project insights.' 
+    highlights: ['Tax Planning', 'Tax Compliance', 'Tax Representation'],
+    color: 'from-blue-600 to-indigo-700',
+    desc: 'Expert guidance on tax planning, compliance, and representation. We help individuals and businesses minimize tax liabilities and stay aligned with evolving tax laws.',
   },
-  { 
-    title: 'Corporate Advisory', 
+  {
+    title: 'GST Compliance',
+    icon: <TrendingUp className="w-7 h-7" />,
+    highlights: ['GST Disputes', 'Notices & Appeals', 'Legal Representation'],
+    color: 'from-orange-500 to-red-600',
+    desc: 'Specialized assistance in handling GST disputes, notices, and appeals. We represent clients before authorities and ensure strong legal support in complex GST matters.',
+  },
+  {
+    title: 'Income Tax',
+    icon: <Briefcase className="w-7 h-7" />,
+    highlights: ['Dispute Resolution', 'Assessments', 'Tribunal Appeals'],
+    color: 'from-emerald-500 to-teal-600',
+    desc: 'Comprehensive support in resolving income tax disputes, assessments, and appeals. We represent clients before tax authorities and tribunals to protect their interests effectively.',
+  },
+  {
+    title: 'Audit Services',
     icon: <Building className="w-7 h-7" />,
-    highlights: ['LLP Registration', 'GST & PF Setup', 'Partnership Deeds'],
+    highlights: ['Forensic Audit', 'IS Audit', 'Risk Management'],
     color: 'from-purple-600 to-pink-600',
-    desc: 'Comprehensive guidance for startups, from name approval to full legal compliance.' 
-  }
+    desc: 'We specialize in forensic and information system audits to detect financial irregularities and assess IT controls. Our audits enhance transparency, compliance, and risk management across your organization.',
+  },
 ];
 
 const leadershipData = [
@@ -204,9 +204,9 @@ const App: React.FC = () => {
               className="h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
             />
             <div className="hidden lg:block">
-              <p className="text-white font-black text-lg tracking-tight leading-none">SANBARTA</p>
-              <p className="text-[#d4af37] font-semibold text-[9px] tracking-[0.32em] uppercase mt-0.5">
-                Management Consulting
+              <p className="text-white font-black text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
+              <p className="text-[#d4af37] font-medium text-[11px] italic tracking-wide mt-0.5">
+                Chartered Accountants
               </p>
             </div>
           </a>
