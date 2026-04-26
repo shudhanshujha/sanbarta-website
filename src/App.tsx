@@ -1,0 +1,676 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { 
+  Phone, Mail, MapPin, Scale, Menu, X,
+  Briefcase, TrendingUp, Building,
+  Play, Pause, CheckCircle2
+} from 'lucide-react';
+import { CircularTestimonials } from './components/ui/circular-testimonials';
+import { CallNowButton } from './components/ui/call-now-button';
+
+/* ─── Framer Motion Variants ──────────────────────── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' as const } }
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.13 } }
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.6 } }
+};
+
+/* ─── Data ────────────────────────────────────────── */
+const services = [
+  { 
+    title: 'Business Accounting', 
+    icon: <Briefcase className="w-7 h-7" />,
+    highlights: ['Tally Prime', 'Payroll Management', 'GST Returns'],
+    color: 'from-blue-600 to-indigo-700',
+    desc: 'Seamless daily administration and bookkeeping powered by Tally Prime.' 
+  },
+  { 
+    title: 'Financial Strategy', 
+    icon: <TrendingUp className="w-7 h-7" />,
+    highlights: ['XBRL Conversion', 'ROC Compliance', 'Bank Requirements'],
+    color: 'from-orange-500 to-red-600',
+    desc: 'Strategic financial reporting that satisfies the most rigorous regulatory standards.' 
+  },
+  { 
+    title: 'Management Consulting', 
+    icon: <Scale className="w-7 h-7" />,
+    highlights: ['CMA Data', 'Project Reports', 'Cost Optimization'],
+    color: 'from-emerald-500 to-teal-600',
+    desc: 'Optimizing resources and securing finance with data-driven project insights.' 
+  },
+  { 
+    title: 'Corporate Advisory', 
+    icon: <Building className="w-7 h-7" />,
+    highlights: ['LLP Registration', 'GST & PF Setup', 'Partnership Deeds'],
+    color: 'from-purple-600 to-pink-600',
+    desc: 'Comprehensive guidance for startups, from name approval to full legal compliance.' 
+  }
+];
+
+const leadershipData = [
+  {
+    name: 'CA Sanbarta Koley',
+    designation: 'Executive Director',
+    quote: 'A Fellow Chartered Accountant, Information Systems Auditor (DISA), and Certified Forensic Auditor. He has extensive knowledge in tax litigation and compliance, with a reputation for providing honest, effective advice and building loyal client relationships.',
+    src: '/assets/director-sk.jpg',
+  },
+  {
+    name: 'CA Samar Kanti Bhatta',
+    designation: 'Director',
+    quote: 'A Fellow Chartered Accountant with extensive experience in auditing, tax assessments, and statutory compliance. His commitment to hard work and efficient processing has earned him a diverse and satisfied client base across industries.',
+    src: '/assets/director-sb.jpg',
+  },
+  {
+    name: 'CA Sanbarta Koley',
+    designation: 'Executive Director',
+    quote: 'Co-founder of Sanbarta Management Consulting, he brings a unique blend of financial acumen and technological insight. Beyond his professional role, he is an avid traveler and an amateur photographer.',
+    src: '/assets/director-sk.jpg',
+  },
+  {
+    name: 'CA Samar Kanti Bhatta',
+    designation: 'Director',
+    quote: 'Specializing in rigorous audit standards and tax advisory, he ensures our clients remain audit-ready and fully compliant with evolving regulatory landscapes.',
+    src: '/assets/director-sb.jpg',
+  }
+];
+
+const stats = [
+  { value: '15+', label: 'Years of Experience' },
+  { value: '500+', label: 'Clients Served' },
+  { value: '98%', label: 'Retention Rate' },
+  { value: '₹200Cr+', label: 'Tax Managed' },
+];
+
+/* ─── App ─────────────────────────────────────────── */
+const App: React.FC = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  useEffect(() => {
+    audioRef.current = new Audio('/assets/welcomemsg.mp3');
+    audioRef.current.loop = false;
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const toggleAudio = () => {
+    if (isPlaying) { audioRef.current?.pause(); }
+    else { audioRef.current?.play(); }
+    setIsPlaying(!isPlaying);
+  };
+
+  const navLinks = ['About', 'Services', 'Leadership', 'Contact'];
+
+  return (
+    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden">
+
+      {/* ── Scroll Progress Bar ── */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] z-[100] origin-left"
+        style={{ scaleX, background: 'linear-gradient(90deg, #d4af37, #f97316)' }}
+      />
+
+      {/* ── Audio Controller ── */}
+      <div className="fixed bottom-8 left-6 z-50 flex items-center gap-3">
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={toggleAudio}
+          className="w-12 h-12 rounded-full bg-white/8 backdrop-blur-xl border border-white/15 flex items-center justify-center shadow-2xl group overflow-hidden relative"
+          aria-label="Toggle audio"
+        >
+          <div className="absolute inset-0 bg-[#d4af37]/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+          {isPlaying
+            ? <Pause size={16} className="text-[#d4af37] z-10" />
+            : <Play size={16} className="text-[#d4af37] ml-0.5 z-10" />}
+        </motion.button>
+        <AnimatePresence>
+          {isPlaying && (
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -16 }}
+              className="px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2"
+            >
+              <div className="flex gap-0.5 h-3 items-end">
+                {[1,2,3,4].map(i => (
+                  <motion.div
+                    key={i}
+                    animate={{ height: [4, 12, 6, 10, 4] }}
+                    transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.1 }}
+                    className="w-[3px] bg-[#d4af37] rounded-full"
+                  />
+                ))}
+              </div>
+              Audio On
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* ── WhatsApp Float ── */}
+      <motion.a
+        href="https://wa.me/917044077047"
+        target="_blank"
+        rel="noreferrer"
+        whileHover={{ scale: 1.1, rotate: 6 }}
+        whileTap={{ scale: 0.95 }}
+        className="whatsapp-float"
+        aria-label="Chat on WhatsApp"
+      >
+        {/* Official WhatsApp SVG logo */}
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 1C7.716 1 1 7.716 1 16c0 2.63.687 5.247 1.993 7.56L1 31l7.63-2.003A14.946 14.946 0 0016 31c8.284 0 15-6.716 15-15S24.284 1 16 1z" fill="#fff"/>
+          <path d="M16 3.5c-6.903 0-12.5 5.597-12.5 12.5 0 2.34.652 4.618 1.887 6.582l.277.44-1.18 4.317 4.433-1.163.427.253A12.44 12.44 0 0016 28.5c6.903 0 12.5-5.597 12.5-12.5S22.903 3.5 16 3.5z" fill="#25D366"/>
+          <path d="M11.93 9.5c-.3-.667-.617-.68-.9-.692-.234-.01-.5-.009-.767-.009-.267 0-.7.1-1.067.5-.367.4-1.4 1.367-1.4 3.334 0 1.967 1.433 3.867 1.633 4.133.2.267 2.767 4.434 6.833 6.034 3.383 1.333 4.067 1.067 4.8 1 .733-.067 2.367-.967 2.7-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467-.4-.2-2.367-1.167-2.733-1.3-.367-.133-.634-.2-.9.2-.267.4-1.033 1.3-1.267 1.567-.233.267-.467.3-.867.1-.4-.2-1.687-.622-3.213-1.98-1.187-1.058-1.99-2.366-2.223-2.766-.234-.4-.025-.617.175-.816.18-.179.4-.467.6-.7.2-.234.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.878-2.167-1.237-2.971z" fill="#fff"/>
+        </svg>
+      </motion.a>
+
+      {/* ── Navbar ── */}
+      <nav
+        className={`fixed w-full z-[90] transition-all duration-500 ${
+          scrolled
+            ? 'glass-nav h-[68px] shadow-xl shadow-black/30'
+            : 'bg-transparent h-[88px]'
+        }`}
+      >
+        <div className="section-container h-full flex items-center justify-between">
+          <a href="#" className="flex items-center gap-3 group">
+            <img
+              src="/assets/Logo.png"
+              alt="SMCPL Logo"
+              className="h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="hidden lg:block">
+              <p className="text-white font-black text-lg tracking-tight leading-none">SANBARTA</p>
+              <p className="text-[#d4af37] font-semibold text-[9px] tracking-[0.32em] uppercase mt-0.5">
+                Management Consulting
+              </p>
+            </div>
+          </a>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map(link => (
+              <a
+                key={link}
+                href={`#${link.toLowerCase()}`}
+                className="relative text-slate-400 hover:text-white font-semibold text-[11px] uppercase tracking-widest transition-colors duration-200 group"
+              >
+                {link}
+                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-[#d4af37] rounded-full transition-all duration-300 group-hover:w-full" />
+              </a>
+            ))}
+            <CallNowButton
+              phone="tel:+917044077047"
+              displayNumber="+91 70440 77047"
+            />
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+            onClick={() => setIsNavOpen(!isNavOpen)}
+            aria-label="Toggle menu"
+          >
+            {isNavOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isNavOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+              className="md:hidden bg-[#020617]/98 backdrop-blur-xl border-t border-white/10 px-6 py-6 flex flex-col gap-5"
+            >
+              {navLinks.map(link => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  onClick={() => setIsNavOpen(false)}
+                  className="text-slate-300 hover:text-white font-semibold text-sm uppercase tracking-widest transition-colors"
+                >
+                  {link}
+                </a>
+              ))}
+              <a
+                href="tel:+917044077047"
+                className="mt-2 px-6 py-3 bg-[#d4af37] text-[#020617] rounded-xl font-black text-sm uppercase tracking-widest text-center"
+              >
+                +91 70440 77047
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      {/* ══════════════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════════════ */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="about">
+
+        {/* Background image with float animation */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="hero-bg-image absolute inset-0 bg-[url('/assets/top_header.jpg')] bg-cover bg-center"
+          />
+          {/* Layered gradients for depth */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/70 via-[#020617]/60 to-[#020617]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/50 via-transparent to-[#020617]/50" />
+        </div>
+
+        {/* Ambient glow orbs */}
+        <div className="hero-glow-orb w-[500px] h-[500px] top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 bg-[#003366]/40" />
+        <div
+          className="hero-glow-orb w-[400px] h-[400px] bottom-1/4 right-1/4 bg-[#d4af37]/20"
+          style={{ animationDelay: '4s' }}
+        />
+
+        {/* Hero Content */}
+        <div className="relative z-10 section-container text-center pt-28 pb-20">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col items-center"
+          >
+            {/* Badge */}
+            <motion.span variants={fadeUp} className="section-label mb-8">
+              Strategic Financial Leadership
+            </motion.span>
+
+            {/* Headline */}
+            <motion.h1
+              variants={fadeUp}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-[1.02] mb-6 max-w-5xl"
+            >
+              Simplifying Tax.
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5cc5f] to-[#f97316]">
+                Amplifying Confidence.
+              </span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              variants={fadeUp}
+              className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            >
+              Bridging the gap between complex regulatory landscapes and
+              high-growth business performance across India.
+            </motion.p>
+
+
+          </motion.div>
+
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10"
+        >
+          <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-[#d4af37]/60 to-transparent" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[#d4af37]/60" />
+        </motion.div>
+      </section>
+
+      {/* ── Stats Strip (below hero, full-width) ── */}
+      <div className="relative z-10 border-y border-white/8 bg-[#020617]/90 backdrop-blur-xl">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
+          className="section-container grid grid-cols-2 md:grid-cols-4 divide-x divide-white/8"
+        >
+          {stats.map((s) => (
+            <motion.div
+              key={s.label}
+              variants={fadeUp}
+              className="px-8 py-10 text-center group"
+            >
+              <p className="text-4xl md:text-5xl font-black text-[#d4af37] tracking-tight mb-2 group-hover:scale-105 transition-transform duration-300">
+                {s.value}
+              </p>
+              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.22em]">{s.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* ── Section Strip ── */}
+      <div className="section-strip" aria-hidden="true">
+        <div className="section-strip-line" />
+        <div className="section-strip-dot" />
+        <div className="section-strip-line" />
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          SERVICES SECTION
+      ══════════════════════════════════════════════ */}
+      <section id="services" className="py-28 md:py-36">
+        <div className="section-container">
+
+          {/* Header */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="mb-16 md:mb-20"
+          >
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-5"
+            >
+              Expertise.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f97316]">
+                Without Compromise.
+              </span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-xl leading-relaxed">
+              Tailored financial strategies and regulatory solutions designed for elite business growth.
+            </motion.p>
+          </motion.div>
+
+          {/* Cards Grid — wrapped in clip container to prevent hover bleed */}
+          <div className="relative pb-10" style={{ zIndex: 1 }}>
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+            >
+              {services.map((s) => (
+                <motion.div
+                  key={s.title}
+                  variants={fadeUp}
+                  className="uiverse-card"
+                >
+                  <div className="card-icon-wrap">
+                    {s.icon}
+                  </div>
+
+                  <div className="mt-auto">
+                    <p className="heading">{s.title}</p>
+                    <p>{s.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-4">
+                      {s.highlights.map(h => (
+                        <span
+                          key={h}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/8 rounded-full text-[10px] font-semibold text-[#d4af37] uppercase tracking-wider"
+                        >
+                          <CheckCircle2 size={9} />
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section Strip ── */}
+      <div className="section-strip" aria-hidden="true" style={{ zIndex: 10, isolation: 'isolate' }}>
+        <div className="section-strip-line" />
+        <div className="section-strip-dot" />
+        <div className="section-strip-line" />
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          LEADERSHIP SECTION
+      ══════════════════════════════════════════════ */}
+      <section id="leadership" className="py-16 md:py-24 bg-gradient-to-b from-transparent to-[#060f1e]/60">
+        <div className="section-container">
+
+          {/* Header */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="text-center mb-16 md:mb-20"
+          >
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4"
+            >
+              Board of Directors
+            </motion.h2>
+            <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-4">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#d4af37]" />
+              <div className="w-2 h-2 rounded-full bg-[#d4af37]" />
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#d4af37]" />
+            </motion.div>
+            <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-lg mx-auto mt-5 leading-relaxed">
+              Led by seasoned professionals with decades of combined expertise in finance and compliance.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <CircularTestimonials
+              testimonials={leadershipData}
+              autoplay={true}
+              colors={{
+                name: '#ffffff',
+                designation: '#d4af37',
+                testimony: '#94a3b8',
+                arrowBackground: '#0d1b34',
+                arrowForeground: '#ffffff',
+                arrowHoverBackground: '#d4af37'
+              }}
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Section Strip ── */}
+      <div className="section-strip" aria-hidden="true">
+        <div className="section-strip-line" />
+        <div className="section-strip-dot" />
+        <div className="section-strip-line" />
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          CONTACT SECTION — Creative Open Layout
+      ══════════════════════════════════════════════ */}
+      <section id="contact" className="py-20 md:py-28 relative overflow-hidden">
+
+        {/* Subtle background texture */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,rgba(0,51,102,0.18),transparent)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_30%_at_80%_20%,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
+
+        <div className="section-container relative z-10">
+
+          {/* ── Top: Headline ── */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="mb-16 md:mb-20"
+          >
+            <motion.p variants={fadeUp} className="text-[#d4af37] text-[11px] font-black uppercase tracking-[0.4em] mb-4">
+              Ready to grow?
+            </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.05] max-w-2xl"
+            >
+              Let's Define Your{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5cc5f] to-[#f97316]">
+                Financial Future.
+              </span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-400 text-lg mt-5 max-w-xl leading-relaxed">
+              Connect with our executive team for a bespoke consultation — tailored to your business strategy, compliance needs, and growth ambitions.
+            </motion.p>
+          </motion.div>
+
+          {/* ── Body: 2-col — info left, map right ── */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid lg:grid-cols-5 gap-8 items-stretch"
+          >
+            {/* Left: Contact info cards */}
+            <div className="lg:col-span-2 flex flex-col gap-5">
+
+              {/* 3 contact detail cards */}
+              {[
+                {
+                  Icon: MapPin,
+                  label: 'Visit Us',
+                  value: 'Balikata, Bandel, Hooghly',
+                  sub: 'West Bengal 712123',
+                },
+                {
+                  Icon: Phone,
+                  label: 'Call Us',
+                  value: '+91 70440 77047',
+                  href: 'tel:+917044077047',
+                },
+                {
+                  Icon: Mail,
+                  label: 'Email Us',
+                  value: 'info@smcpl.in',
+                  href: 'mailto:info@smcpl.in',
+                },
+              ].map(({ Icon, label, value, sub, href }) => (
+                <motion.div
+                  key={label}
+                  variants={fadeUp}
+                  className="group flex items-center gap-5 p-5 rounded-2xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#d4af37]/25 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[#d4af37]/10 border border-[#d4af37]/20 flex items-center justify-center shrink-0 group-hover:bg-[#d4af37]/18 transition-colors duration-300">
+                    <Icon size={20} className="text-[#d4af37]" />
+                  </div>
+                  <div>
+                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-0.5">{label}</p>
+                    {href ? (
+                      <a href={href} className="text-white font-semibold text-sm hover:text-[#d4af37] transition-colors duration-200">{value}</a>
+                    ) : (
+                      <p className="text-white font-semibold text-sm">{value}</p>
+                    )}
+                    {sub && <p className="text-slate-500 text-xs mt-0.5">{sub}</p>}
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* WhatsApp CTA */}
+              <motion.div variants={fadeUp}>
+                <a
+                  href="https://wa.me/917044077047"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center gap-3 p-5 rounded-2xl border border-[#25D366]/20 bg-[#25D366]/8 hover:bg-[#25D366]/15 hover:border-[#25D366]/40 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[#25D366] flex items-center justify-center shrink-0 shadow-lg shadow-[#25D366]/25">
+                    <svg viewBox="0 0 32 32" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M11.93 9.5c-.3-.667-.617-.68-.9-.692-.234-.01-.5-.009-.767-.009-.267 0-.7.1-1.067.5-.367.4-1.4 1.367-1.4 3.334 0 1.967 1.433 3.867 1.633 4.133.2.267 2.767 4.434 6.833 6.034 3.383 1.333 4.067 1.067 4.8 1 .733-.067 2.367-.967 2.7-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467-.4-.2-2.367-1.167-2.733-1.3-.367-.133-.634-.2-.9.2-.267.4-1.033 1.3-1.267 1.567-.233.267-.467.3-.867.1-.4-.2-1.687-.622-3.213-1.98-1.187-1.058-1.99-2.366-2.223-2.766-.234-.4-.025-.617.175-.816.18-.179.4-.467.6-.7.2-.234.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.878-2.167-1.237-2.971z" fill="#fff"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-0.5">WhatsApp</p>
+                    <p className="text-white font-semibold text-sm group-hover:text-[#25D366] transition-colors duration-200">Chat with our team</p>
+                  </div>
+                  <svg className="text-slate-600 group-hover:text-[#25D366] group-hover:translate-x-1 transition-all duration-200" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </motion.div>
+            </div>
+
+            {/* Right: Map */}
+            <motion.div
+              variants={fadeUp}
+              className="lg:col-span-3 relative min-h-[380px] rounded-2xl overflow-hidden border border-white/8"
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3674.8262017505135!2d88.37295691495554!3d22.919780425913515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f893c70ac2650d%3A0x765e58afb60ed41f!2sSanbarta%20Management%20Consulting%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1585481082475!5m2!1sen!2sin"
+                className="absolute inset-0 w-full h-full border-0"
+                style={{ filter: 'grayscale(1) invert(0.9) contrast(1.2) opacity(0.6) brightness(0.85)' }}
+                allowFullScreen
+                loading="lazy"
+                title="Office Location"
+              />
+              {/* Edge fades */}
+              <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(2,6,23,0.6)] pointer-events-none rounded-2xl" />
+              {/* Location badge */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none">
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#020617]/92 backdrop-blur-md border border-white/10 shadow-xl whitespace-nowrap">
+                  <MapPin size={13} className="text-[#d4af37] shrink-0" />
+                  <span className="text-white text-xs font-semibold">Sanbarta Management Consulting</span>
+                </div>
+              </div>
+              {/* LIVE MAP badge */}
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#020617]/80 backdrop-blur-sm border border-[#d4af37]/20">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#d4af37] animate-pulse" />
+                <span className="text-[#d4af37] text-[10px] font-bold uppercase tracking-widest">Live Map</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+
+      <footer className="py-8 border-t border-white/6">
+        <div className="section-container flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-slate-600 text-xs font-semibold uppercase tracking-[0.18em]">
+            © 2026 SMCPL Global. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            {['Privacy Policy', 'Terms of Service'].map(t => (
+              <a key={t} href="#" className="text-slate-600 hover:text-slate-400 text-xs font-semibold uppercase tracking-widest transition-colors">
+                {t}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+};
+
+export default App;
