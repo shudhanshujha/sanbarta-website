@@ -193,7 +193,7 @@ export const CircularTestimonials = ({
                 {activeTestimonial.designation}
               </p>
               <p
-                className="leading-relaxed italic"
+                className="leading-relaxed italic text-justify"
                 style={{ color: colorTestimony, fontSize: fontSizeQuote }}
               >
                 {activeTestimonial.quote.split(" ").map((word, i) => (

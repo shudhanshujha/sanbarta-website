@@ -64,29 +64,16 @@ const leadershipData = [
     src: '/assets/director-sk.jpg',
   },
   {
-    name: 'CA Samar Kanti Bhatta',
-    designation: 'Director',
-    quote: 'A Fellow Chartered Accountant with extensive experience in auditing, tax assessments, and statutory compliance. His commitment to hard work and efficient processing has earned him a diverse and satisfied client base across industries.',
-    src: '/assets/director-sb.jpg',
-  },
-  {
     name: 'CA Sanbarta Koley',
     designation: 'Proprietor & Founder',
     quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
     src: '/assets/director-sk.jpg',
-  },
-  {
-    name: 'CA Samar Kanti Bhatta',
-    designation: 'Director',
-    quote: 'Specializing in rigorous audit standards and tax advisory, he ensures our clients remain audit-ready and fully compliant with evolving regulatory landscapes.',
-    src: '/assets/director-sb.jpg',
   }
 ];
 
 const stats = [
   { value: '15+', label: 'Years of Experience' },
   { value: '500+', label: 'Clients Served' },
-  { value: '98%', label: 'Retention Rate' },
 ];
 
 /* ─── App ─────────────────────────────────────────── */
@@ -202,9 +189,9 @@ const App: React.FC = () => {
               alt="SMCPL Logo"
               className="h-10 sm:h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="hidden lg:block">
-              <p className="text-white font-black text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
-              <p className="text-[#d4af37] font-medium text-[11px] italic tracking-wide mt-0.5">
+            <div className="block">
+              <p className="text-white font-black text-xs sm:text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
+              <p className="text-[#d4af37] font-medium text-[9px] sm:text-[11px] italic tracking-wide mt-0.5">
                 Chartered Accountants
               </p>
             </div>
@@ -301,7 +288,7 @@ const App: React.FC = () => {
           >
             {/* Badge */}
             <motion.span variants={fadeUp} className="section-label mb-8">
-              Strategic Financial Leadership
+              Expert Tax Advisory
             </motion.span>
 
             {/* Headline */}
@@ -319,7 +306,7 @@ const App: React.FC = () => {
             {/* Subtitle */}
             <motion.p
               variants={fadeUp}
-              className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+              className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed text-center"
             >
               Bridging the gap between complex regulatory landscapes and
               high-growth business performance across India.
@@ -348,7 +335,7 @@ const App: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
-          className="section-container grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/8"
+          className="section-container grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/8"
         >
           {stats.map((s) => (
             <motion.div
@@ -384,18 +371,18 @@ const App: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="mb-16 md:mb-20"
+            className="mb-16 md:mb-20 flex flex-col items-center text-center"
           >
             <motion.h2
               variants={fadeUp}
-              className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-5"
+              className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-5 text-center"
             >
               Expertise.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f97316]">
                 Without Compromise.
               </span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-xl leading-relaxed">
+            <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-xl leading-relaxed text-center">
               Tailored financial strategies and regulatory solutions designed for elite business growth.
             </motion.p>
           </motion.div>
@@ -429,7 +416,7 @@ const App: React.FC = () => {
 
                   {/* Expandable body — revealed on hover */}
                   <div className="card-body">
-                    <p>{s.desc}</p>
+                    <p className="text-justify">{s.desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {s.highlights.map(h => (
                         <span
@@ -464,7 +451,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl border border-[#d4af37]/30 bg-[#d4af37]/6 hover:bg-[#d4af37]/14 hover:border-[#d4af37]/55 text-[#d4af37] font-bold text-sm tracking-wide transition-all duration-300 group"
             >
-              Explore All Services at smcpl.in
+              Explore Our Other Services at www.smcpl.in
               <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
             </motion.a>
           </div>
@@ -502,7 +489,7 @@ const App: React.FC = () => {
             >
               Why Choose{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f97316]">
-                Sanbarta?
+                Sanbarta &amp; Associates?
               </span>
             </motion.h2>
             <motion.div variants={fadeUp} className="flex justify-center w-full">
@@ -543,7 +530,7 @@ const App: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-slate-400 text-sm leading-relaxed text-justify">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -766,7 +753,7 @@ const App: React.FC = () => {
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none">
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#020617]/92 backdrop-blur-md border border-white/10 shadow-xl whitespace-nowrap">
                   <MapPin size={13} className="text-[#d4af37] shrink-0" />
-                  <span className="text-white text-xs font-semibold">Sanbarta Management Consulting</span>
+                  <span className="text-white text-xs font-semibold">Sanbarta &amp; Associates</span>
                 </div>
               </div>
               {/* LIVE MAP badge */}
@@ -784,7 +771,7 @@ const App: React.FC = () => {
       <footer className="py-8 border-t border-white/6">
         <div className="section-container flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-600 text-xs font-semibold uppercase tracking-[0.18em]">
-            © 2026 SMCPL Global. All rights reserved.
+            © 2026 Sanbarta &amp; Associates. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {['Privacy Policy', 'Terms of Service'].map(t => (
