@@ -62,12 +62,6 @@ const leadershipData = [
     designation: 'Proprietor & Founder',
     quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
     src: '/assets/director-sk.jpg',
-  },
-  {
-    name: 'CA Sanbarta Koley',
-    designation: 'Proprietor & Founder',
-    quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
-    src: '/assets/director-sk.jpg',
   }
 ];
 
