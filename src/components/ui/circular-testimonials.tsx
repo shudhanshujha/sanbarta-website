@@ -1,3 +1,4 @@
+// Forced HMR reload
 "use client";
 import React, {
   useEffect,
