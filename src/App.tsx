@@ -187,7 +187,7 @@ const App: React.FC = () => {
             <img
               src="/assets/Logo.png"
               alt="SMCPL Logo"
-              className="h-10 sm:h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
+              className="h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
             />
             <div className="block">
               <p className="text-white font-black text-xs sm:text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
