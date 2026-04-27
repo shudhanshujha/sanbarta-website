@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { 
   Phone, Mail, MapPin, Scale, Menu, X,
   Briefcase, TrendingUp, Building,
-  Play, Pause, CheckCircle2
+  Play, Pause, CheckCircle2, Users, Sparkles, Clock, ExternalLink
 } from 'lucide-react';
 import { CircularTestimonials } from './components/ui/circular-testimonials';
 import { CallNowButton } from './components/ui/call-now-button';
@@ -59,8 +59,8 @@ const services = [
 const leadershipData = [
   {
     name: 'CA Sanbarta Koley',
-    designation: 'Executive Director',
-    quote: 'A Fellow Chartered Accountant, Information Systems Auditor (DISA), and Certified Forensic Auditor. He has extensive knowledge in tax litigation and compliance, with a reputation for providing honest, effective advice and building loyal client relationships.',
+    designation: 'Proprietor & Founder',
+    quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
     src: '/assets/director-sk.jpg',
   },
   {
@@ -71,8 +71,8 @@ const leadershipData = [
   },
   {
     name: 'CA Sanbarta Koley',
-    designation: 'Executive Director',
-    quote: 'Co-founder of Sanbarta Management Consulting, he brings a unique blend of financial acumen and technological insight. Beyond his professional role, he is an avid traveler and an amateur photographer.',
+    designation: 'Proprietor & Founder',
+    quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
     src: '/assets/director-sk.jpg',
   },
   {
@@ -87,7 +87,6 @@ const stats = [
   { value: '15+', label: 'Years of Experience' },
   { value: '500+', label: 'Clients Served' },
   { value: '98%', label: 'Retention Rate' },
-  { value: '₹200Cr+', label: 'Tax Managed' },
 ];
 
 /* ─── App ─────────────────────────────────────────── */
@@ -201,7 +200,7 @@ const App: React.FC = () => {
             <img
               src="/assets/Logo.png"
               alt="SMCPL Logo"
-              className="h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
+              className="h-10 sm:h-12 w-auto bg-white rounded-xl p-1.5 shadow-xl transition-transform duration-300 group-hover:scale-105"
             />
             <div className="hidden lg:block">
               <p className="text-white font-black text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
@@ -349,7 +348,7 @@ const App: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
-          className="section-container grid grid-cols-2 md:grid-cols-4 divide-x divide-white/8"
+          className="section-container grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/8"
         >
           {stats.map((s) => (
             <motion.div
@@ -401,53 +400,177 @@ const App: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          {/* Cards Grid — wrapped in clip container to prevent hover bleed */}
-          <div className="relative pb-10" style={{ zIndex: 1 }}>
+          {/* Cards Grid */}
+          <div className="relative" style={{ zIndex: 1 }}>
             <motion.div
               variants={stagger}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
-              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-start"
+              style={{ minHeight: '230px' }}
             >
               {services.map((s) => (
                 <motion.div
                   key={s.title}
                   variants={fadeUp}
                   className="uiverse-card"
+                  tabIndex={0}
+                  role="article"
+                  style={{ alignSelf: 'start' }}
                 >
-                  {/* Icon — always at top, in flow */}
-                  <div className="card-icon-wrap">
-                    {s.icon}
-                  </div>
-
-                  {/* Title + desc */}
-                  <div>
+                  {/* Collapsed header: icon + title always visible */}
+                  <div className="card-header">
+                    <div className="card-icon-wrap">
+                      {s.icon}
+                    </div>
                     <p className="heading">{s.title}</p>
-                    <p>{s.desc}</p>
                   </div>
 
-                  {/* Tags — pushed to bottom with mt-auto */}
-                  <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
-                    {s.highlights.map(h => (
-                      <span
-                        key={h}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/8 rounded-full text-[10px] font-semibold text-[#d4af37] uppercase tracking-wider"
-                      >
-                        <CheckCircle2 size={9} />
-                        {h}
-                      </span>
-                    ))}
+                  {/* Expandable body — revealed on hover */}
+                  <div className="card-body">
+                    <p>{s.desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {s.highlights.map(h => (
+                        <span
+                          key={h}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/8 rounded-full text-[10px] font-semibold text-[#d4af37] uppercase tracking-wider"
+                        >
+                          <CheckCircle2 size={9} />
+                          {h}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+
+          {/* More Services Link */}
+          <div className="mt-24 flex flex-col items-center gap-3">
+            <div className="flex items-center gap-4 w-full max-w-xs">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/10" />
+              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.28em] whitespace-nowrap">More Services</p>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/10" />
+            </div>
+            <motion.a
+              href="https://www.smcpl.in"
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl border border-[#d4af37]/30 bg-[#d4af37]/6 hover:bg-[#d4af37]/14 hover:border-[#d4af37]/55 text-[#d4af37] font-bold text-sm tracking-wide transition-all duration-300 group"
+            >
+              Explore All Services at smcpl.in
+              <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+            </motion.a>
           </div>
         </div>
       </section>
 
       {/* ── Section Strip ── */}
       <div className="section-strip" aria-hidden="true" style={{ zIndex: 10, isolation: 'isolate' }}>
+        <div className="section-strip-line" />
+        <div className="section-strip-dot" />
+        <div className="section-strip-line" />
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          WHY CHOOSE US SECTION
+      ══════════════════════════════════════════════ */}
+      <section id="why-choose-us" className="py-20 md:py-28">
+        <div className="section-container">
+
+          {/* Header */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-center"
+            style={{ marginBottom: '7rem' }}
+          >
+            <motion.span variants={fadeUp} className="section-label mb-6">
+              Our Promise
+            </motion.span>
+            <motion.h2
+              variants={fadeUp}
+              className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-tight mb-4"
+            >
+              Why Choose{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f97316]">
+                Sanbarta?
+              </span>
+            </motion.h2>
+            <motion.div variants={fadeUp} className="flex justify-center w-full">
+              <p className="text-slate-400 text-lg text-center leading-relaxed max-w-2xl">
+                Trusted by hundreds of clients for integrity, precision, and results that matter.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* Cards */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid sm:grid-cols-3 gap-8 md:gap-10"
+          >
+            {[
+              {
+                icon: <Users className="w-6 h-6" />,
+                title: 'Experienced Team',
+                desc: 'Highly qualified professionals with decades of collective experience. Our team brings deep expertise across tax, audit, and compliance domains.',
+              },
+              {
+                icon: <Sparkles className="w-6 h-6" />,
+                title: 'Personalized Service',
+                desc: 'Tailored financial solutions for every client. We understand that each business is unique and craft strategies specific to your needs and goals.',
+              },
+              {
+                icon: <Clock className="w-6 h-6" />,
+                title: 'Timely Delivery',
+                desc: 'Commitment to deadlines and compliance. We pride ourselves on delivering accurate, thorough work well within the time frames our clients need.',
+              },
+            ].map((item) => (
+              <motion.div key={item.title} variants={fadeUp} className="why-choose-card">
+                <div className="why-choose-icon">
+                  {item.icon}
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Proprietor note */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex justify-center"
+            style={{ marginTop: '8rem' }}
+          >
+            <div className="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-white/[0.03] border border-white/8">
+              <div className="w-2 h-2 rounded-full bg-[#d4af37] animate-pulse" />
+              <p className="text-slate-400 text-sm">
+                Led by <span className="text-white font-semibold">CA Sanbarta Koley</span>, Proprietor &amp; Founder
+              </p>
+            </div>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* ── Section Strip ── */}
+      <div className="section-strip" aria-hidden="true">
         <div className="section-strip-line" />
         <div className="section-strip-dot" />
         <div className="section-strip-line" />
@@ -471,7 +594,7 @@ const App: React.FC = () => {
               variants={fadeUp}
               className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4"
             >
-              Board of Directors
+              Our Leadership
             </motion.h2>
             <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-4">
               <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#d4af37]" />
