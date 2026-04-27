@@ -164,7 +164,7 @@ export const CircularTestimonials = ({
               key={testimonial.src}
               src={testimonial.src}
               alt={testimonial.name}
-              className="absolute inset-0 w-full h-full object-cover rounded-[2rem] shadow-2xl border border-white/10"
+              className="absolute inset-0 w-full h-full object-cover object-top md:object-center rounded-[2rem] shadow-2xl border border-white/10"
               style={getImageStyle(index)}
             />
           ))}
@@ -211,30 +211,7 @@ export const CircularTestimonials = ({
             </motion.div>
           </AnimatePresence>
 
-          <div className="flex gap-6 mt-12 md:mt-16">
-            <button
-              className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/10 shadow-lg"
-              onClick={handlePrev}
-              style={{
-                backgroundColor: hoverPrev ? colorArrowHoverBg : colorArrowBg,
-              }}
-              onMouseEnter={() => setHoverPrev(true)}
-              onMouseLeave={() => setHoverPrev(false)}
-            >
-              <FaArrowLeft size={24} color={colorArrowFg} />
-            </button>
-            <button
-              className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/10 shadow-lg"
-              onClick={handleNext}
-              style={{
-                backgroundColor: hoverNext ? colorArrowHoverBg : colorArrowBg,
-              }}
-              onMouseEnter={() => setHoverNext(true)}
-              onMouseLeave={() => setHoverNext(false)}
-            >
-              <FaArrowRight size={24} color={colorArrowFg} />
-            </button>
-          </div>
+
         </div>
       </div>
     </div>

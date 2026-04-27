@@ -189,9 +189,9 @@ const App: React.FC = () => {
               alt="SMCPL Logo"
               className="h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="block">
-              <p className="text-white font-black text-xs sm:text-base tracking-tight leading-none">Sanbarta &amp; Associates</p>
-              <p className="text-[#d4af37] font-medium text-[9px] sm:text-[11px] italic tracking-wide mt-0.5">
+            <div className="block mt-1">
+              <p className="text-white font-black text-sm sm:text-xl tracking-wide leading-none drop-shadow-md">Sanbarta &amp; Associates</p>
+              <p className="text-[#d4af37] font-bold text-[10px] sm:text-xs tracking-[0.15em] mt-1.5 uppercase">
                 Chartered Accountants
               </p>
             </div>
@@ -588,9 +588,11 @@ const App: React.FC = () => {
               <div className="w-2 h-2 rounded-full bg-[#d4af37]" />
               <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#d4af37]" />
             </motion.div>
-            <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-lg mx-auto mt-5 leading-relaxed">
-              Led by seasoned professionals with decades of combined expertise in finance and compliance.
-            </motion.p>
+            <div className="flex justify-center w-full mt-5">
+              <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-lg text-center leading-relaxed">
+                Led by seasoned professionals with decades of combined expertise in finance and compliance.
+              </motion.p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -601,7 +603,7 @@ const App: React.FC = () => {
           >
             <CircularTestimonials
               testimonials={leadershipData}
-              autoplay={true}
+              autoplay={false}
               colors={{
                 name: '#ffffff',
                 designation: '#d4af37',
