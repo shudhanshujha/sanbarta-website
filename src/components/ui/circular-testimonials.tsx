@@ -2,12 +2,10 @@
 "use client";
 import React, {
   useEffect,
-  useRef,
   useState,
   useMemo,
-  useCallback,
+  useRef
 } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Testimonial {
@@ -59,16 +57,11 @@ export const CircularTestimonials = ({
   const colorName = colors.name ?? "#fff";
   const colorDesignation = colors.designation ?? "#d4af37";
   const colorTestimony = colors.testimony ?? "#94a3b8";
-  const colorArrowBg = colors.arrowBackground ?? "#1e293b";
-  const colorArrowFg = colors.arrowForeground ?? "#fff";
-  const colorArrowHoverBg = colors.arrowHoverBackground ?? "#d4af37";
   const fontSizeName = fontSizes.name ?? "1.875rem";
   const fontSizeDesignation = fontSizes.designation ?? "1rem";
   const fontSizeQuote = fontSizes.quote ?? "1.125rem";
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoverPrev, setHoverPrev] = useState(false);
-  const [hoverNext, setHoverNext] = useState(false);
   const [containerWidth, setContainerWidth] = useState(1200);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -102,15 +95,7 @@ export const CircularTestimonials = ({
     };
   }, [autoplay, testimonialsLength]);
 
-  const handleNext = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % testimonialsLength);
-    if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
-  }, [testimonialsLength]);
 
-  const handlePrev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + testimonialsLength) % testimonialsLength);
-    if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
-  }, [testimonialsLength]);
 
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
