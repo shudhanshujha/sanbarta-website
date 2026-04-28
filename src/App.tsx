@@ -61,7 +61,7 @@ const leadershipData = [
     name: 'CA Sanbarta Koley',
     designation: 'Proprietor & Founder',
     quote: 'CA Sanbarta Koley is a seasoned Chartered Accountant with over 10 years of experience specializing in both direct and indirect tax litigation. He is recognized for his strategic approach in handling complex tax matters before various adjudication and appellate authorities. In addition to his core expertise, he is a Certified Forensic Auditor and Information System Auditor, bringing a robust blend of financial acumen and technological insight to every engagement. His commitment to precision, compliance, and client advocacy has earned him a reputation for excellence in the industry.',
-    src: '/assets/director-sk.jpg',
+    src: '/assets/damnne.jpg',
   }
 ];
 
@@ -95,10 +95,20 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const toggleAudio = () => {
-    if (isPlaying) { audioRef.current?.pause(); }
-    else { audioRef.current?.play(); }
-    setIsPlaying(!isPlaying);
+  const toggleAudio = async () => {
+    if (!audioRef.current) return;
+    
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        await audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    } catch (err) {
+      console.warn("Audio playback failed:", err);
+      setIsPlaying(false);
+    }
   };
 
   const navLinks = ['About', 'Services', 'Leadership', 'Contact'];
@@ -365,7 +375,7 @@ const App: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="mb-16 md:mb-20 flex flex-col items-center text-center"
+            className="mb-24 md:mb-32 flex flex-col items-center text-center"
           >
             <motion.h2
               variants={fadeUp}
@@ -382,14 +392,13 @@ const App: React.FC = () => {
           </motion.div>
 
           {/* Cards Grid */}
-          <div className="relative" style={{ zIndex: 1 }}>
+          <div className="relative" style={{ zIndex: 1, marginTop: '4rem' }}>
             <motion.div
               variants={stagger}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.1 }}
               className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-start"
-              style={{ minHeight: '230px' }}
             >
               {services.map((s) => (
                 <motion.div
@@ -429,7 +438,7 @@ const App: React.FC = () => {
           </div>
 
           {/* More Services Link */}
-          <div className="mt-24 flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-3" style={{ marginTop: '4rem' }}>
             <div className="flex items-center gap-4 w-full max-w-xs">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/10" />
               <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.28em] whitespace-nowrap">More Services</p>
@@ -582,7 +591,7 @@ const App: React.FC = () => {
               <div className="w-2 h-2 rounded-full bg-[#d4af37]" />
               <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#d4af37]" />
             </motion.div>
-            <div className="flex justify-center w-full mt-5">
+            <div className="flex justify-center w-full mt-5" style={{ paddingBottom: '0rem' }}>
               <motion.p variants={fadeUp} className="text-slate-400 text-lg max-w-lg text-center leading-relaxed">
                 Led by seasoned professionals with decades of combined expertise in finance and compliance.
               </motion.p>
@@ -594,6 +603,7 @@ const App: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            style={{ marginTop: '4rem' }}
           >
             <CircularTestimonials
               testimonials={leadershipData}
@@ -738,7 +748,6 @@ const App: React.FC = () => {
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3674.8262017505135!2d88.37295691495554!3d22.919780425913515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f893c70ac2650d%3A0x765e58afb60ed41f!2sSanbarta%20Management%20Consulting%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1585481082475!5m2!1sen!2sin"
                 className="absolute inset-0 w-full h-full border-0"
-                style={{ filter: 'grayscale(1) invert(0.9) contrast(1.2) opacity(0.6) brightness(0.85)' }}
                 allowFullScreen
                 loading="lazy"
                 title="Office Location"
@@ -762,9 +771,38 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* ── Section Strip ── */}
+      <div className="section-strip" aria-hidden="true" style={{ marginTop: '2rem' }}>
+        <div className="section-strip-line" />
+        <div className="section-strip-dot" />
+        <div className="section-strip-line" />
+      </div>
+
+      {/* ── Flashing Footer Branding ── */}
+      <section className="relative overflow-hidden flex items-center justify-center py-12 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] to-[#0a1423]" />
+        <motion.div
+          animate={{ opacity: [0.4, 1, 0.4], scale: [0.98, 1, 0.98] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="relative z-10 flex flex-col items-center text-center px-6"
+        >
+          <img 
+            src="/assets/Logo.png" 
+            alt="Sanbarta & Associates Logo" 
+            className="w-auto h-20 sm:h-28 mb-6 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
+          />
+          <h2 className="font-black text-white tracking-widest uppercase text-2xl sm:text-4xl mb-4 [text-shadow:0_4px_10px_rgba(0,0,0,0.5)]">
+            Sanbarta &amp; Associates
+          </h2>
+          <p className="text-[#d4af37] text-xs sm:text-lg font-bold tracking-[0.2em] uppercase">
+            Your Trusted Partner in Tax Litigation
+          </p>
+        </motion.div>
+      </section>
+
       {/* ── Footer ── */}
 
-      <footer className="py-8 border-t border-white/6">
+      <footer className="py-8 border-t border-white/6 bg-[#0a1423]">
         <div className="section-container flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-600 text-xs font-semibold uppercase tracking-[0.18em]">
             © 2026 Sanbarta &amp; Associates. All rights reserved.

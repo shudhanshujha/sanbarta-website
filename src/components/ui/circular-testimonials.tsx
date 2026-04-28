@@ -85,7 +85,7 @@ export const CircularTestimonials = ({
   }, []);
 
   useEffect(() => {
-    if (autoplay) {
+    if (autoplay && testimonialsLength > 1) {
       autoplayIntervalRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % testimonialsLength);
       }, 5000);
@@ -93,16 +93,16 @@ export const CircularTestimonials = ({
     return () => {
       if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
     };
-  }, [autoplay, testimonialsLength]);
-
-
+  }, [autoplay, testimonialsLength, activeIndex]); // Reset interval when activeIndex changes
 
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.8;
     const isActive = index === activeIndex;
-    const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
-    const isRight = (activeIndex + 1) % testimonialsLength === index;
+    
+    // Improved logic for 2 testimonials: only one can be "left" or "right"
+    const isLeft = testimonialsLength > 1 && (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
+    const isRight = testimonialsLength > 2 && (activeIndex + 1) % testimonialsLength === index;
     
     if (isActive) {
       return {
@@ -146,58 +146,134 @@ export const CircularTestimonials = ({
         {/* Image Display */}
         <div className="relative w-full h-[400px] md:h-[500px] perspective-[1000px]" ref={imageContainerRef}>
           {testimonials.map((testimonial, index) => (
-            <img
+            <div
               key={testimonial.src}
-              src={testimonial.src}
-              alt={testimonial.name}
-              className="absolute inset-0 w-full h-full object-cover object-top md:object-center rounded-[2rem] shadow-2xl border border-white/10"
+              className="absolute inset-0 w-full h-full"
               style={getImageStyle(index)}
-            />
+            >
+              <motion.img
+                src={testimonial.src}
+                alt={testimonial.name}
+                className="w-full h-full object-cover object-center rounded-[2rem] shadow-2xl border border-white/10"
+                animate={index === activeIndex ? { y: [0, -8, 0] } : {}}
+                transition={index === activeIndex ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : {}}
+                whileHover={index === activeIndex ? { scale: 1.03 } : {}}
+              />
+            </div>
           ))}
         </div>
 
         {/* Text Content */}
-        <div className="flex flex-col justify-center min-h-[300px]">
+        <div className="flex flex-col justify-center min-h-[380px] md:min-h-[450px] relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { 
+                  opacity: 1, 
+                  transition: { 
+                    staggerChildren: 0.25,
+                    delayChildren: 0.1
+                  } 
+                }
+              }}
+              className="flex flex-col relative"
             >
-              <h3
-                className="font-black tracking-tight mb-2"
-                style={{ color: colorName, fontSize: fontSizeName }}
-              >
-                {activeTestimonial.name}
-              </h3>
-              <p
-                className="font-bold uppercase tracking-widest mb-8"
+              {/* Name with Shine Effect & Mask Reveal */}
+              <div className="relative overflow-hidden mb-2 rounded-lg">
+                <motion.h3
+                  variants={{
+                    hidden: { y: "100%", opacity: 0 },
+                    visible: { 
+                      y: 0, 
+                      opacity: 1, 
+                      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+                    }
+                  }}
+                  className="font-black tracking-tight relative z-10"
+                  style={{ color: colorName, fontSize: fontSizeName }}
+                >
+                  {activeTestimonial.name}
+                </motion.h3>
+                <motion.div 
+                  animate={{ x: ["-100%", "200%"] }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity, 
+                    repeatDelay: 4, 
+                    ease: "easeInOut" 
+                  }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-20 pointer-events-none"
+                />
+              </div>
+              
+              {/* Designation with Staggered Reveal */}
+              <motion.p
+                variants={{
+                  hidden: { opacity: 0, x: -15 },
+                  visible: { 
+                    opacity: 1, 
+                    x: 0, 
+                    transition: { duration: 0.8, ease: "easeOut" } 
+                  }
+                }}
+                className="font-bold uppercase tracking-[0.2em] mb-8"
                 style={{ color: colorDesignation, fontSize: fontSizeDesignation }}
               >
                 {activeTestimonial.designation}
-              </p>
-              <p
-                className="leading-relaxed italic text-justify"
+              </motion.p>
+              
+              {/* Biography with Premium Word-by-Word Reveal */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { 
+                    opacity: 1, 
+                    transition: { 
+                      staggerChildren: 0.05, 
+                      delayChildren: 0.4 
+                    } 
+                  }
+                }}
+                className="leading-relaxed italic text-justify relative"
                 style={{ color: colorTestimony, fontSize: fontSizeQuote }}
               >
-                {activeTestimonial.quote.split(" ").map((word, i) => (
+                {/* Decorative Quote Mark — repositioned to avoid overflow */}
+                <span className="absolute -left-4 md:-left-8 -top-6 text-6xl md:text-7xl text-[#d4af37]/10 font-serif leading-none select-none pointer-events-none">“</span>
+                
+                {activeTestimonial.quote.split(/\s+/).map((word, i) => (
                   <motion.span
                     key={i}
-                    initial={{ filter: "blur(10px)", opacity: 0, y: 5 }}
-                    animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.02 * i }}
-                    className="inline-block"
+                    variants={{
+                      hidden: { 
+                        filter: "blur(8px)", 
+                        opacity: 0, 
+                        y: 10, 
+                        scale: 0.95
+                      },
+                      visible: { 
+                        filter: "blur(0px)", 
+                        opacity: 1, 
+                        y: 0, 
+                        scale: 1, 
+                        transition: { 
+                          duration: 0.7, 
+                          ease: [0.215, 0.61, 0.355, 1] 
+                        } 
+                      }
+                    }}
+                    className="inline-block origin-bottom"
                   >
                     {word}&nbsp;
                   </motion.span>
                 ))}
-              </p>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
-
-
         </div>
       </div>
     </div>
