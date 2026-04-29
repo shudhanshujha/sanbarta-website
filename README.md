@@ -1,73 +1,60 @@
-# React + TypeScript + Vite
+# Sanbarta & Associates Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Professional website for Sanbarta & Associates, a leading Chartered Accountancy firm specializing in tax litigation, GST compliance, and financial advisory.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Modern & Premium Design**: Built with React, Vite, and Tailwind CSS for a high-end professional aesthetic.
+- **Responsive Layout**: Optimized for all devices, from mobile to desktop.
+- **Dynamic Animations**: Smooth transitions and interactive elements powered by Framer Motion.
+- **SEO Optimized**: Complete with metadata, social sharing tags, and performance optimizations.
+- **Contact Integration**: Easy access via Call Now buttons and WhatsApp integration.
+- **Interactive Map**: Live Google Maps integration for office location.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React 19, TypeScript
+- **Styling**: Tailwind CSS 4, CSS Modules
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Build Tool**: Vite 8
+- **Deployment**: Vercel
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/shudhanshujha/sanbarta-website.git
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `src/App.tsx`: Main application component and layout.
+- `src/index.css`: Global styles and design tokens.
+- `src/components/ui/`: Reusable UI components like Circular Testimonials and buttons.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Optimization & SEO
+
+The project includes several optimizations:
+- **Lazy Loading**: Images and components are loaded only when needed.
+- **Metadata**: Comprehensive SEO tags in `index.html`.
+- **Performance**: Tree-shaking and efficient asset management via Vite.
+
+## License
+
+© 2026 Sanbarta & Associates. All rights reserved.
