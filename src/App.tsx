@@ -190,7 +190,9 @@ const App: React.FC = () => {
           <a href="#" className="flex items-center gap-3 group">
             <img
               src="/assets/Logo.png"
-              alt="SMCPL Logo"
+              alt="Sanbarta & Associates Logo"
+              width="48"
+              height="48"
               className="h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
             />
             <div className="block mt-1">
@@ -452,10 +454,10 @@ const App: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl border border-[#d4af37]/30 bg-[#d4af37]/6 hover:bg-[#d4af37]/14 hover:border-[#d4af37]/55 text-[#d4af37] font-bold text-sm tracking-wide transition-all duration-300 group"
+              className="inline-flex items-center justify-center text-center gap-2.5 px-4 sm:px-7 py-3.5 rounded-xl border border-[#d4af37]/30 bg-[#d4af37]/6 hover:bg-[#d4af37]/14 hover:border-[#d4af37]/55 text-[#d4af37] font-bold text-sm tracking-wide transition-all duration-300 group max-w-full"
             >
-              Explore Our Other Services at www.smcpl.in
-              <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+              <span className="flex-1">Explore Our Other Services at www.smcpl.in</span>
+              <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 shrink-0" />
             </motion.a>
           </div>
         </div>
@@ -548,10 +550,10 @@ const App: React.FC = () => {
             className="flex justify-center"
             style={{ marginTop: '8rem' }}
           >
-            <div className="flex items-center gap-3 px-6 py-3.5 rounded-xl bg-white/[0.03] border border-white/8">
-              <div className="w-2 h-2 rounded-full bg-[#d4af37] animate-pulse" />
-              <p className="text-slate-400 text-sm">
-                Led by <span className="text-white font-semibold">CA Sanbarta Koley</span>, Proprietor &amp; Founder
+            <div className="flex flex-col sm:flex-row items-center gap-3 px-4 sm:px-6 py-3.5 rounded-xl bg-white/[0.03] border border-white/8 text-center sm:text-left w-full max-w-md mx-auto">
+              <div className="w-2 h-2 rounded-full bg-[#d4af37] animate-pulse shrink-0" />
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                Led by <span className="text-white font-semibold whitespace-nowrap">CA Sanbarta Koley</span>, <span className="block sm:inline">Proprietor &amp; Founder</span>
               </p>
             </div>
           </motion.div>
@@ -789,6 +791,9 @@ const App: React.FC = () => {
           <img 
             src="/assets/Logo.png" 
             alt="Sanbarta & Associates Logo" 
+            loading="lazy"
+            width="112"
+            height="112"
             className="w-auto h-20 sm:h-28 mb-6 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
           />
           <h2 className="font-black text-white tracking-widest uppercase text-2xl sm:text-4xl mb-4 [text-shadow:0_4px_10px_rgba(0,0,0,0.5)]">
@@ -803,17 +808,10 @@ const App: React.FC = () => {
       {/* ── Footer ── */}
 
       <footer className="py-8 border-t border-white/6 bg-[#0a1423]">
-        <div className="section-container flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="section-container flex flex-col sm:flex-row items-center justify-center text-center gap-4">
           <p className="text-slate-600 text-xs font-semibold uppercase tracking-[0.18em]">
             © 2026 Sanbarta &amp; Associates. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            {['Privacy Policy', 'Terms of Service'].map(t => (
-              <a key={t} href="#" className="text-slate-600 hover:text-slate-400 text-xs font-semibold uppercase tracking-widest transition-colors">
-                {t}
-              </a>
-            ))}
-          </div>
         </div>
       </footer>
 

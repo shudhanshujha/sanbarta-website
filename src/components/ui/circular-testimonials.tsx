@@ -154,6 +154,7 @@ export const CircularTestimonials = ({
               <motion.img
                 src={testimonial.src}
                 alt={testimonial.name}
+                loading="lazy"
                 className="w-full h-full object-cover object-center rounded-[2rem] shadow-2xl border border-white/10"
                 animate={index === activeIndex ? { y: [0, -8, 0] } : {}}
                 transition={index === activeIndex ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : {}}
