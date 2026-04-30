@@ -239,7 +239,7 @@ const App: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="md:hidden bg-[#020617]/98 backdrop-blur-xl border-t border-white/10 px-6 py-6 flex flex-col gap-5"
+              className="md:hidden bg-[#020617]/98 backdrop-blur-xl border-t border-white/10 px-6 pt-6 pb-10 flex flex-col gap-5"
             >
               {navLinks.map(link => (
                 <a
