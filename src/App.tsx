@@ -247,7 +247,7 @@ const App: React.FC = () => {
                     key={link}
                     href={`#${link.toLowerCase()}`}
                     onClick={() => setIsNavOpen(false)}
-                    className="text-slate-300 hover:text-[#d4af37] font-bold text-base uppercase tracking-[0.2em] transition-all duration-300 text-center"
+                    className="text-slate-300 hover:text-white font-semibold text-sm uppercase tracking-widest transition-colors pl-8"
                   >
                     {link}
                   </a>
