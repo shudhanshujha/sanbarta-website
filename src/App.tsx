@@ -254,20 +254,13 @@ const App: React.FC = () => {
                 ))}
               </div>
               
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
-
-              <div className="flex flex-col items-center gap-6">
+              <div className="flex flex-col items-center">
                 <a
                   href="tel:+917044077047"
                   className="w-full py-4 bg-[#d4af37] text-[#020617] rounded-xl font-black text-sm uppercase tracking-widest text-center shadow-lg shadow-[#d4af37]/20 active:scale-95 transition-transform"
                 >
                   +91 70440 77047
                 </a>
-                
-                <div className="flex flex-col items-center gap-2 opacity-50">
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Quick Connect</p>
-                  <p className="text-xs text-white">info@smcpl.in</p>
-                </div>
               </div>
             </motion.div>
           )}
