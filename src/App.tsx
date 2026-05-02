@@ -231,37 +231,61 @@ const App: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Menu Full-Screen Overlay */}
         <AnimatePresence>
           {isNavOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-              className="md:hidden bg-[#020617]/98 backdrop-blur-2xl border-t border-white/10 px-8 pt-12 pb-24 flex flex-col gap-8 shadow-2xl"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-0 z-[100] md:hidden bg-[#020617] flex flex-col items-center justify-center p-8 overflow-hidden"
             >
-              <div className="flex flex-col gap-6">
-                {navLinks.map(link => (
-                  <a
+              {/* Close Button Top Right */}
+              <button
+                onClick={() => setIsNavOpen(false)}
+                className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors p-2"
+                aria-label="Close menu"
+              >
+                <X size={32} />
+              </button>
+
+              {/* Centered Menu Links */}
+              <div className="flex flex-col items-center gap-10">
+                {navLinks.map((link, idx) => (
+                  <motion.a
                     key={link}
                     href={`#${link.toLowerCase()}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + idx * 0.05, duration: 0.5 }}
                     onClick={() => setIsNavOpen(false)}
-                    className="text-slate-300 hover:text-white font-semibold text-sm uppercase tracking-widest transition-colors pl-8"
+                    className="group relative"
                   >
-                    {link}
-                  </a>
+                    <span className="text-4xl sm:text-5xl font-black text-white uppercase tracking-tighter transition-all duration-300 group-hover:text-[#d4af37] group-hover:scale-110 block">
+                      {link}
+                    </span>
+                    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 bg-[#d4af37] transition-all duration-300 group-hover:w-full" />
+                  </motion.a>
                 ))}
               </div>
-              
-              <div className="flex flex-col items-center">
+
+              {/* Bottom CTA or Info */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="absolute bottom-12 flex flex-col items-center gap-4"
+              >
+                <div className="h-px w-24 bg-white/10 mb-2" />
                 <a
                   href="tel:+917044077047"
-                  className="w-full py-4 bg-[#d4af37] text-[#020617] rounded-xl font-black text-sm uppercase tracking-widest text-center shadow-lg shadow-[#d4af37]/20 active:scale-95 transition-transform"
+                  className="text-[#d4af37] font-bold text-lg tracking-widest uppercase hover:scale-105 transition-transform"
                 >
                   +91 70440 77047
                 </a>
-              </div>
+                <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Chartered Accountants</p>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
