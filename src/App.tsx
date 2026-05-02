@@ -239,24 +239,36 @@ const App: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
-              className="md:hidden bg-[#020617]/98 backdrop-blur-xl border-t border-white/10 px-6 pt-10 pb-14 flex flex-col gap-6"
+              className="md:hidden bg-[#020617]/98 backdrop-blur-2xl border-t border-white/10 px-8 pt-12 pb-24 flex flex-col gap-8 shadow-2xl"
             >
-              {navLinks.map(link => (
+              <div className="flex flex-col gap-6">
+                {navLinks.map(link => (
+                  <a
+                    key={link}
+                    href={`#${link.toLowerCase()}`}
+                    onClick={() => setIsNavOpen(false)}
+                    className="text-slate-300 hover:text-[#d4af37] font-bold text-base uppercase tracking-[0.2em] transition-all duration-300 text-center"
+                  >
+                    {link}
+                  </a>
+                ))}
+              </div>
+              
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
+
+              <div className="flex flex-col items-center gap-6">
                 <a
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
-                  onClick={() => setIsNavOpen(false)}
-                  className="text-slate-300 hover:text-white font-semibold text-sm uppercase tracking-widest transition-colors pl-8"
+                  href="tel:+917044077047"
+                  className="w-full py-4 bg-[#d4af37] text-[#020617] rounded-xl font-black text-sm uppercase tracking-widest text-center shadow-lg shadow-[#d4af37]/20 active:scale-95 transition-transform"
                 >
-                  {link}
+                  +91 70440 77047
                 </a>
-              ))}
-              <a
-                href="tel:+917044077047"
-                className="mt-2 px-6 py-3 bg-[#d4af37] text-[#020617] rounded-xl font-black text-sm uppercase tracking-widest text-center"
-              >
-                +91 70440 77047
-              </a>
+                
+                <div className="flex flex-col items-center gap-2 opacity-50">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Quick Connect</p>
+                  <p className="text-xs text-white">info@smcpl.in</p>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
