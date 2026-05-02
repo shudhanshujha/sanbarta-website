@@ -231,7 +231,7 @@ const App: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Dropdown */}
         <AnimatePresence>
           {isNavOpen && (
             <motion.div
